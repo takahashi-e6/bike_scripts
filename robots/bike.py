@@ -4,8 +4,7 @@ from isaaclab.actuators import ImplicitActuatorCfg
 
 BIKE_CONFIG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=f"/home/tr01/lab_projects/my_models/usd/bike/bike.usd",
-        # joint_drive_props=sim_utils.JointDrivePropertiesCfg(drive_type="force"),
+        usd_path=f"/workspace/lab_share/bike.usd",
     ),
     actuators={"all_joints": ImplicitActuatorCfg(
         joint_names_expr=["back_wheel_joint", "steering_joint"],
@@ -19,7 +18,5 @@ BIKE_CONFIG = ArticulationCfg(
             "back_wheel_joint": 0.0,
             "steering_joint": 0.0,
         },
-        # rot=(-0.707, 0.0, 0.0, 0.707),
-        # pos=(1.25, -0.25, 1.0),
     ),
 )

@@ -17,29 +17,12 @@ if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
 
 
-# def roll_and_pitch(
-#     env: ManagerBasedRLEnv,
-#     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot")
-# ) -> torch.Tensor:
-#     robot: RigidObject = env.scene[robot_cfg.name]
-#     euler = euler_xyz_from_quat(robot.data.root_link_quat_w)
-#     roll = euler[:,0].reshape(-1,1)
-#     pitch = euler[:,1].reshape(-1,1)
-#     return torch.hstack((roll, pitch))
-
 def roll_omg(
     env: ManagerBasedRLEnv,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
     robot: RigidObject = env.scene[robot_cfg.name]
     return robot.data.root_com_ang_vel_b[:,0].reshape(-1,1)
-
-# def pitch_omg(
-#     env: ManagerBasedRLEnv,
-#     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot")
-# ) -> torch.Tensor:
-#     robot: RigidObject = env.scene[robot_cfg.name]
-#     return robot.data.root_com_ang_vel_b[:,1].reshape(-1,1)
 
 def calc(
     env: ManagerBasedRLEnv,

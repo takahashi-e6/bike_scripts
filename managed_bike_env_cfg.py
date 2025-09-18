@@ -65,7 +65,6 @@ class CommandsCfg:
     base_velocity = mdp.UniformVelocityCommandCfg(
         asset_name="robot",
         resampling_time_range=(5.0, 5.0),
-        # resampling_time_range=(10.0, 10.0),
         rel_standing_envs=0.02,
         rel_heading_envs=1.0,
         heading_command=True,
@@ -109,11 +108,6 @@ class ObservationsCfg:
 class EventCfg:
     """Configuration for events."""
 
-    # reset
-    # reset_bike = EventTerm(
-    #     func=mdp.reset_scene_to_default,
-    #     mode="reset"
-    # )
     reset_base = EventTerm(
         func=mdp.reset_root_state_uniform,
         mode="reset",
@@ -122,16 +116,6 @@ class EventCfg:
             "velocity_range": {},
         },
     )
-    # reset_handle_position = EventTerm(
-    #     func=mdp.reset_joints_by_offset,
-    #     mode="reset",
-    #     params={
-    #         "asset_cfg": SceneEntityCfg("robot", joint_names=["steering_joint"]),
-    #         "position_range": (-1., 1.),
-    #         "velocity_range": (0., 0.),
-    #     },
-    # )
-
 
 @configclass
 class RewardsCfg:
