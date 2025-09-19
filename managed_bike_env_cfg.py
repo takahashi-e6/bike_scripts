@@ -42,11 +42,8 @@ class ManagedBikeSceneCfg(InteractiveSceneCfg):
     )
 
     # robot
-    # robot: ArticulationCfg = BIKE_CONFIG.replace(prim_path="{ENV_REGEX_NS}/Robot")
     robot: ArticulationCfg = BIKE_CONFIG.replace(prim_path="/World/envs/env_.*/Robot")
     
-    # robot: ArticulationCfg = CARTPOLE_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
-
     # lights
     dome_light = AssetBaseCfg(
         prim_path="/World/DomeLight",
@@ -94,7 +91,10 @@ class ObservationsCfg:
         # observation terms (order preserved)
         omg_r = ObsTerm(func=mdp.roll_omg)
         # roll_and_pitch = ObsTerm(func=mdp.roll_and_pitch)
-        obs = ObsTerm(func=mdp.calc, params={"command_name": "base_velocity"})
+        alignment = ObsTerm(func=mdp.alignment, params={"command_name": "base_velocity"})
+
+        forward_speed = ObsTerm(func=mdp.forward_speed)
+
 
         def __post_init__(self) -> None:
             self.enable_corruption = False
@@ -116,6 +116,7 @@ class EventCfg:
             "velocity_range": {},
         },
     )
+
 
 @configclass
 class RewardsCfg:

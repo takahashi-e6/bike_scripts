@@ -24,7 +24,7 @@ def roll_omg(
     robot: RigidObject = env.scene[robot_cfg.name]
     return robot.data.root_com_ang_vel_b[:,0].reshape(-1,1)
 
-def calc(
+def alignment(
     env: ManagerBasedRLEnv,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
     command_name: str = "base_velocity"
@@ -38,7 +38,11 @@ def calc(
     dot = torch.sum(forwards * commands, dim=-1, keepdim=True)
     # 外積で向きのずれの方向を計算
     cross = torch.cross(forwards, commands, dim=-1)[:,-1].reshape(-1,1)
-    forward_speed = robot.data.root_com_lin_vel_b[:,0].reshape(-1,1)
-    obs = torch.hstack((forward_speed, dot, cross))
+    return torch.hstack((dot, cross))
 
-    return obs
+def forward_speed(
+    env: ManagerBasedRLEnv,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot")
+) -> torch.Tensor:
+    robot: RigidObject = env.scene[robot_cfg.name]
+    return robot.data.root_com_lin_vel_b[:,0].reshape(-1,1)
